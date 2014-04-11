@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Express 2013 for Windows Desktop
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Crossbow", "Crossbow\Crossbow.vcxproj", "{25FE39EC-7727-460B-A793-07ADDA34B5FB}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "A_C_Minus_Parser", "A_C_Minus_Parser\A_C_Minus_Parser.vcxproj", "{F909BD43-40E4-4A44-B73B-36EF216E344F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DES_Encrypter", "DES_Encrypter\DES_Encrypter.vcxproj", "{79CA66CF-EB6B-4B77-8947-7448B618D6AC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rvalue_reference", "rvalue_reference\rvalue_reference.vcxproj", "{CE032FC8-2919-4929-A297-8CF341054B8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{79CA66CF-EB6B-4B77-8947-7448B618D6AC}.Debug|Win32.Build.0 = Debug|Win32
 		{79CA66CF-EB6B-4B77-8947-7448B618D6AC}.Release|Win32.ActiveCfg = Release|Win32
 		{79CA66CF-EB6B-4B77-8947-7448B618D6AC}.Release|Win32.Build.0 = Release|Win32
+		{CE032FC8-2919-4929-A297-8CF341054B8E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CE032FC8-2919-4929-A297-8CF341054B8E}.Debug|Win32.Build.0 = Debug|Win32
+		{CE032FC8-2919-4929-A297-8CF341054B8E}.Release|Win32.ActiveCfg = Release|Win32
+		{CE032FC8-2919-4929-A297-8CF341054B8E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
