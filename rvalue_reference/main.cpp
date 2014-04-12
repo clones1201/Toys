@@ -63,7 +63,8 @@ typename RemoveReference<T>::Type&& MoveValue(T&& value)
 int main(){
 	auto a = X(new int(1));
 	auto b = X(new int(2));
-	auto d = reinterpret_cast<int&&>(*new int);
+	X d;
+	d = reinterpret_cast<X&&>(X());
 	a = MoveValue(b);
 	X c(MoveValue(b));
 
