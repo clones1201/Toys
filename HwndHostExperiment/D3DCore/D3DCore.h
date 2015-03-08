@@ -16,7 +16,7 @@ namespace space
 	protected:
 		D3DCore();
 	public:
-		static D3DCore* Constructor();
+		static D3DCore* CreateInstance();
 
 		virtual ~D3DCore();
 		virtual void Initialize(HWND handle) = 0;
@@ -26,7 +26,5 @@ namespace space
 
 extern "C"
 {
-	D3DCORE_API space::D3DCore* D3DCore_Constructor();
-	D3DCORE_API void D3DCore_Initialize(space::D3DCore* pThis, HWND handle);
-	D3DCORE_API void D3DCore_Render(space::D3DCore* pThis);
+	 
 }

@@ -13,8 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-using space;
-
 namespace HwndHostWindow
 {
     /// <summary>
@@ -27,22 +25,18 @@ namespace HwndHostWindow
             InitializeComponent();
             Loaded += OnUIReady;
         }
-
-        D3DCore renderer = new D3DCore();
-
+		
         private void OnUIReady(object sender, RoutedEventArgs e)
         {
             MyHwndHost hwndHost = new MyHwndHost();
             hwndHost.Opacity = 0.6;
             HostElement.Child = hwndHost;
             
-            renderer.Initialize(hwndHost.HwndHandle);
             CompositionTarget.Rendering += CompositionTarget_Rendering;            
         }
 
         void CompositionTarget_Rendering(object sender, EventArgs e)
         {
-            renderer.Render();
         }
     }
 }

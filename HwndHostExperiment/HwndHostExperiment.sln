@@ -6,6 +6,7 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HwndHostWindow", "HwndHostWindow\HwndHostWindow.csproj", "{DBD53BE4-243B-4203-B7B8-BAD2BC147DE0}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A97DB036-C139-49C3-ABEF-E546212569AE} = {A97DB036-C139-49C3-ABEF-E546212569AE}
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57} = {9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3DCore", "D3DCore\D3DCore.vcxproj", "{A97DB036-C139-49C3-ABEF-E546212569AE}"
@@ -13,7 +14,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NativeWindow", "NativeWindow\NativeWindow.vcxproj", "{22ADBC14-11EC-44A8-8F03-6C0BA3ECEDA7}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A97DB036-C139-49C3-ABEF-E546212569AE} = {A97DB036-C139-49C3-ABEF-E546212569AE}
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57} = {9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "D3DLayeredWindow", "D3DLayeredWindow\D3DLayeredWindow.vcxproj", "{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +40,7 @@ Global
 		{DBD53BE4-243B-4203-B7B8-BAD2BC147DE0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{DBD53BE4-243B-4203-B7B8-BAD2BC147DE0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{DBD53BE4-243B-4203-B7B8-BAD2BC147DE0}.Release|Win32.ActiveCfg = Release|Any CPU
+		{DBD53BE4-243B-4203-B7B8-BAD2BC147DE0}.Release|Win32.Build.0 = Release|Any CPU
 		{A97DB036-C139-49C3-ABEF-E546212569AE}.Debug|Any CPU.ActiveCfg = Debug|Win32
 		{A97DB036-C139-49C3-ABEF-E546212569AE}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
 		{A97DB036-C139-49C3-ABEF-E546212569AE}.Debug|Mixed Platforms.Build.0 = Debug|Win32
@@ -56,6 +61,16 @@ Global
 		{22ADBC14-11EC-44A8-8F03-6C0BA3ECEDA7}.Release|Mixed Platforms.Build.0 = Release|Win32
 		{22ADBC14-11EC-44A8-8F03-6C0BA3ECEDA7}.Release|Win32.ActiveCfg = Release|Win32
 		{22ADBC14-11EC-44A8-8F03-6C0BA3ECEDA7}.Release|Win32.Build.0 = Release|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Debug|Mixed Platforms.ActiveCfg = Debug|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Debug|Mixed Platforms.Build.0 = Debug|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Debug|Win32.Build.0 = Debug|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Release|Any CPU.ActiveCfg = Release|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Release|Mixed Platforms.ActiveCfg = Release|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Release|Mixed Platforms.Build.0 = Release|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Release|Win32.ActiveCfg = Release|Win32
+		{9E9294D2-F0A7-40C2-972F-2DC3DBC05A57}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

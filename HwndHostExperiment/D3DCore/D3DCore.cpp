@@ -9,9 +9,8 @@
 
 #include <memory>
 #include <mutex>
-
-#include <atlbase.h>
-#include <exception>
+#include <wrl\client.h>
+using namespace Microsoft::WRL;
 
 namespace space
 {
@@ -19,27 +18,26 @@ namespace space
 	{
 	private:
 
-		CComPtr<IDXGIFactory> pDXGIFactory = nullptr;
-		CComPtr<ID3D11Device> pD3DDevice = nullptr;
-		CComPtr<ID3D11DeviceContext> pDeviceContext = nullptr;
+		ComPtr<IDXGIFactory> pDXGIFactory;
+		ComPtr<ID3D11Device> pD3DDevice;
+		ComPtr<ID3D11DeviceContext> pDeviceContext;
 
-		CComPtr<IDXGISwapChain> pSwapChain = nullptr;
-		CComPtr<ID3D11Texture2D> pBuffer = nullptr;
-		CComPtr<ID3D11RenderTargetView> pRenderTarget = nullptr;
+		ComPtr<IDXGISwapChain> pSwapChain;
+		ComPtr<ID3D11Texture2D> pBuffer;
+		ComPtr<ID3D11RenderTargetView> pRenderTarget;
 
 	public:
 		D3DRendererImpl()
 		{
-			HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)&pDXGIFactory);
+			HRESULT hr = CreateDXGIFactory(__uuidof(IDXGIFactory), (void**)pDXGIFactory.GetAddressOf());
 			
-			CComPtr<IDXGIAdapter> pAdapter = nullptr;
-			std::vector<CComPtr<IDXGIAdapter>> pAdapters;
+			ComPtr<IDXGIAdapter> pAdapter;
+			std::vector<ComPtr<IDXGIAdapter>> pAdapters;
 			int i = 0;
-			while (pDXGIFactory->EnumAdapters(i, &pAdapter) != DXGI_ERROR_NOT_FOUND)
+			while (pDXGIFactory->EnumAdapters(i, pAdapter.GetAddressOf()) != DXGI_ERROR_NOT_FOUND)
 			{
 				pAdapters.push_back(pAdapter);
 				i++;
-				pAdapter = nullptr;
 			}
 
 			UINT createDeviceFlags = 0;
@@ -59,15 +57,13 @@ namespace space
 			D3D_FEATURE_LEVEL                   featureLevel = D3D_FEATURE_LEVEL_11_0;
 
 			for (UINT i = 0; i < pAdapters.size(); ++i){
-				pD3DDevice = nullptr;
-				pDeviceContext = nullptr;
-				hr = D3D11CreateDevice(pAdapters.at(i), driverType, NULL, createDeviceFlags,
+				hr = D3D11CreateDevice(pAdapters.at(i).Get(), driverType, NULL, createDeviceFlags,
 					featureLevels,
 					numFeatureLevels,
 					D3D11_SDK_VERSION,
-					&pD3DDevice,
+					pD3DDevice.GetAddressOf(),
 					&featureLevel,
-					&pDeviceContext);
+					pDeviceContext.GetAddressOf());
 			
 				if (SUCCEEDED(hr) && featureLevel >= D3D_FEATURE_LEVEL_11_0)
 				{
@@ -76,7 +72,7 @@ namespace space
 			}
 			if (FAILED(hr))
 			{
-				throw std::exception("CreateDevice failed.");
+				return;
 			}
 		}
 
@@ -99,21 +95,21 @@ namespace space
 			sd.SampleDesc.Quality = 0;
 			sd.Windowed = TRUE;
 
-			HRESULT hr = pDXGIFactory->CreateSwapChain(pD3DDevice, &sd,&pSwapChain);
+			HRESULT hr = pDXGIFactory->CreateSwapChain(pD3DDevice.Get(), &sd,pSwapChain.GetAddressOf());
 			if (FAILED(hr))
 			{
-				return;
+				return ;
 			}
 			
-			if (SUCCEEDED(pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&pBuffer)))
+			if (SUCCEEDED(pSwapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)pBuffer.GetAddressOf())))
 			{
-				pD3DDevice->CreateRenderTargetView(pBuffer,nullptr, &pRenderTarget);
+				pD3DDevice->CreateRenderTargetView(pBuffer.Get(),nullptr, pRenderTarget.GetAddressOf());
 			}			
 		}
 
 		virtual void Render() override
 		{
-			ID3D11RenderTargetView* targets[] = { pRenderTarget };			
+			ID3D11RenderTargetView* targets[] = { pRenderTarget.Get() };			
 			pDeviceContext->OMSetRenderTargets(1, targets, nullptr);
 			DXGI_SWAP_CHAIN_DESC sd;
 			pSwapChain->GetDesc(&sd);
@@ -127,9 +123,14 @@ namespace space
 			};
 			pDeviceContext->RSSetViewports(1, viewPorts);
 			pDeviceContext->RSSetScissorRects(1, rects);
+			float clearColor[] = { 0.0f, 0.3f, 0.5f, 0.0f };
+			pDeviceContext->ClearRenderTargetView(pRenderTarget.Get(), clearColor);
+			viewPorts[0] = { 0, sd.BufferDesc.Height / 2, sd.BufferDesc.Width / 2, sd.BufferDesc.Height, 0, 1 }
+			;
+			pDeviceContext->RSSetViewports(1, viewPorts);
 
-			float clearColor[] = { 0.8f, 0.3f, 0.1f, 0.0f };
-			pDeviceContext->ClearRenderTargetView(pRenderTarget, clearColor);
+			float clearColor2[] = { 0.8f, 0.3f, 0.1f, 0.0f };
+			pDeviceContext->ClearRenderTargetView(pRenderTarget.Get(), clearColor2);
 
 			pSwapChain->Present(0, 0);
 		}
@@ -140,32 +141,18 @@ namespace space
 	D3DCore::~D3DCore()
 	{}
 
-	D3DCore* D3DCore::Constructor()
+	static std::unique_ptr<D3DCore> instance;
+	static std::once_flag coreFlag;
+	D3DCore* D3DCore::CreateInstance()
 	{
 		try
 		{
 			return new D3DRendererImpl();
 		}
-		catch (std::exception& e)
+		catch (std::exception &e)
 		{
-			printf("%s", e.what());
+			return nullptr;
 		}
-		return nullptr;
 	}
 	
-}
-
-space::D3DCore* D3DCore_Constructor()
-{
-	return space::D3DCore::Constructor();
-}
-
-void D3DCore_Initialize(space::D3DCore* pThis, HWND handle)
-{
-	pThis->Initialize(handle);
-}
-
-void D3DCore_Render(space::D3DCore* pThis)
-{
-	pThis->Render();
 }
